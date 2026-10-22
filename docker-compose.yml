@@ -1,0 +1,43 @@
+# ============================================================
+# 在线招聘平台 - 基础设施（可选）
+# 若本机已有 MySQL/Redis/Nacos，可跳过本文件，直接通过环境变量指定地址
+#   MYSQL_HOST / MYSQL_PORT / REDIS_HOST / REDIS_PORT / NACOS_ADDR
+# 使用本文件启动（端口刻意避开其他项目）：
+#   docker compose up -d
+# ============================================================
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: recruit-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      TZ: Asia/Shanghai
+      LANG: C.UTF-8
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    ports:
+      - "13308:3306"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d:ro
+      - recruit-mysql-data:/var/lib/mysql
+
+  redis:
+    image: redis:7-alpine
+    container_name: recruit-redis
+    ports:
+      - "6380:6379"
+
+  nacos:
+    image: nacos/nacos-server:v2.1.0
+    container_name: recruit-nacos
+    environment:
+      MODE: standalone
+      NACOS_AUTH_ENABLE: "false"
+      JVM_XMS: 256m
+      JVM_XMX: 256m
+      JVM_XMN: 128m
+    ports:
+      - "8858:8848"
+      - "9848:9848"
+
+volumes:
+  recruit-mysql-data:

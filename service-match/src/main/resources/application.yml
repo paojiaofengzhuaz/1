@@ -1,0 +1,33 @@
+server:
+  port: 18105
+
+spring:
+  application:
+    name: service-match
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_ADDR:127.0.0.1:8848}
+  # 附件上传限制（AI 小助手支持上传 txt/md/pdf/docx）
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# Feign 超时
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 10000
+
+# AI 求职小助手（阿里百炼 OpenAI 兼容模式）
+recruit:
+  ai:
+    enabled: ${AI_ENABLED:true}
+    # 阿里百炼 API Key：通过环境变量 DASHSCOPE_API_KEY 注入，不要写进仓库
+    api-key: ${DASHSCOPE_API_KEY:}
+    model: ${AI_MODEL:qwen-plus}
+    endpoint: ${AI_ENDPOINT:https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions}
+    read-timeout-ms: ${AI_READ_TIMEOUT_MS:60000}

@@ -1,0 +1,41 @@
+server:
+  port: 18090
+
+spring:
+  application:
+    name: recruit-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_ADDR:127.0.0.1:8848}
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: service-user
+          uri: lb://service-user
+          predicates:
+            - Path=/user/**
+        - id: service-job
+          uri: lb://service-job
+          predicates:
+            - Path=/job/**
+        - id: service-resume
+          uri: lb://service-resume
+          predicates:
+            - Path=/resume/**,/delivery/**
+        - id: service-im
+          uri: lb://service-im
+          predicates:
+            - Path=/im/**
+        - id: service-match
+          uri: lb://service-match
+          predicates:
+            - Path=/match/**
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}

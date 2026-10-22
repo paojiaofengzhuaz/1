@@ -1,0 +1,47 @@
+# ---------- Java / Maven ----------
+target/
+*.class
+*.jar
+*.war
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/timing.properties
+
+# ---------- Node / 前端 ----------
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---------- IDE ----------
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.project
+.classpath
+*.swp
+
+# ---------- 系统 ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------- 日志 / 临时 ----------
+logs/
+*.log
+tmp/
+temp/
+
+# ---------- 本地环境变量 ----------
+.env
+.env.local
+
+# ---------- 运行日志 / PPT 中间产物 ----------
+.logs/
+ppt-work/
